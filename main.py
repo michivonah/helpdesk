@@ -1,21 +1,31 @@
-from nicegui import ui
+import streamlit as st
 
-ui.markdown('''
+st.set_page_config(
+    page_title="Helpdesk by Michi",
+    page_icon="🎟️",
+    layout="wide",
+    initial_sidebar_state="expanded",
+    menu_items={
+        'About': "# Helpdesk by Michi von Ah"
+    }
+)
+
+st.write("""
 # Helpdesk
 This is a simple helpdesk tool.
-''')
 
-ui.link('View on GitHub', 'https://github.com/michivonah/helpdesk')
-            
-ui.button('Load tickets!', on_click=lambda: ui.notify('Please connect to a database!', close_button='OK'))
+[View on Github](https://github.com/michivonah/helpdesk)
+""")
+                  
+st.sidebar.markdown("# Helpdesk")
 
-ui.input(label='Username')
+st.button('Load tickets')
 
-ui.input(label='Password')
+username = st.text_input('Username')
 
-ui.button('Sign in')
+password = st.text_input('Password')
 
-# Start App
-ui.colors(primary='#9b59b6', secondary='#8e44ad', accent='#f1c40f')
-ui.run(title='Helpdesk by Michi', dark='false')
+st.button('Sign in')
+
+st.error('Please connect to a database!', icon="💽")
 
