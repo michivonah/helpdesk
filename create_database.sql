@@ -13,7 +13,7 @@ CREATE DATABASE helpdesk;
 USE helpdesk;
 
 -- CREATE TABLES
-CREATE TABLE user(
+CREATE TABLE `user`(
 	userid INTEGER IDENTITY,
 	username VARCHAR(30),
 	mail VARCHAR(250),
@@ -22,14 +22,14 @@ CREATE TABLE user(
 	PRIMARY KEY(userid)
 );
 
-CREATE TABLE usergroup(
+CREATE TABLE `usergroup`(
 	usergroupid INTEGER IDENTITY,
 	name VARCHAR(30),
 	admin BOOLEAN,
 	PRIMARY KEY(usergroupid)
 );
 
-CREATE TABLE ticket(
+CREATE TABLE `ticket`(
 	ticketid INTEGER IDENTITY,
 	name VARCHAR(120),
     description VARCHAR(240),
@@ -39,13 +39,13 @@ CREATE TABLE ticket(
 	PRIMARY KEY(ticketid)
 );
 
-CREATE TABLE status(
+CREATE TABLE `status`(
 	statusid INTEGER IDENTITY,
 	name VARCHAR(30),
 	PRIMARY KEY(statusid)
 );
 
-CREATE TABLE customer(
+CREATE TABLE `customer`(
 	customerid INTEGER IDENTITY,
 	name VARCHAR(30),
     mail VARCHAR(250),
@@ -58,7 +58,7 @@ CREATE TABLE customer(
 );
 
 -- SET FOREIGN KEYS
-ALTER TABLE user ADD FOREIGN KEY(fk_usergroupid) REFERENCES usergroup(usergroupid);
+ALTER TABLE `user` ADD FOREIGN KEY(fk_usergroupid) REFERENCES usergroup(usergroupid);
 ALTER TABLE ticket ADD FOREIGN KEY(fk_statusid) REFERENCES status(statusid);
 ALTER TABLE ticket ADD FOREIGN KEY(fk_userid) REFERENCES user(userid);
 ALTER TABLE ticket ADD FOREIGN KEY(fk_customerid) REFERENCES customer(customerid);
@@ -68,6 +68,6 @@ INSERT INTO usergroup (name, admin)
 	VALUES('SYSTEM', true);
 
 -- CREATE DEFAULT USERS
-INSERT INTO user (username, password) VALUES
+INSERT INTO `user` (username, password) VALUES
     ('SYSTEM', 'SYSTEM'),
     ('admin', 'admin');
