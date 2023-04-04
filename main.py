@@ -11,21 +11,19 @@ st.set_page_config(
 )
 
 st.write("""
-# Helpdesk
+# Helpdesk by Michi
 This is a simple helpdesk tool.
 
 [View on Github](https://github.com/michivonah/helpdesk)
 """)
                   
-st.sidebar.markdown("# Helpdesk")
+st.sidebar.markdown("# Login")
 
-st.button('Load tickets')
+username = st.sidebar.text_input('Username')
 
-username = st.text_input('Username')
+password = st.sidebar.text_input('Password')
 
-password = st.text_input('Password')
-
-st.button('Sign in')
+st.sidebar.button('Sign in')
 
 st.error('Please connect to a database!', icon="💽")
 
