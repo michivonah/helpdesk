@@ -13,10 +13,10 @@ Here you can see all your tickets:
 # st.sidebar.image(image, caption='Sunrise by the mountains')
 
 conn = psycopg2.connect(
-    host="helpdesk-db",
+    host=st.secrets["DBHOST"],
     database="helpdesk",
-    user="helpdesk",
-    password="password",
+    user=st.secrets["DBUSER"],
+    password=st.secrets["DBPASSWORD"],
     port="5454",)
 
 cursor = conn.cursor()
