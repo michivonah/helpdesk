@@ -27,7 +27,7 @@ with registerTab:
     st.markdown("# Register")
 
 email = st.sidebar.text_input('Mail')
-password = st.sidebar.text_input('Password')        
+password = st.sidebar.text_input('Password', type="password")        
 loginBtn = st.sidebar.button('Sign in')
 
 if loginBtn:
