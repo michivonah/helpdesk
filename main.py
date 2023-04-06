@@ -16,14 +16,24 @@ This is a simple helpdesk tool.
 
 [View on Github](https://github.com/michivonah/helpdesk)
 """)
-                  
-st.sidebar.markdown("# Login")
+         
+loginTab, registerTab = st.sidebar.tabs(["Login", "Register"])
 
-username = st.sidebar.text_input('Username')
+with loginTab:
+    st.markdown("# Login")
 
-password = st.sidebar.text_input('Password')
+with registerTab:
+    st.markdown("# Register")
 
-st.sidebar.button('Sign in')
+email = st.sidebar.text_input('Mail')
+password = st.sidebar.text_input('Password')        
+loginBtn = st.sidebar.button('Sign in')
 
-st.error('Please connect to a database!', icon="💽")
+if loginBtn:
+    st.sidebar.info('Logged in', icon="ℹ️")
+else:
+    st.sidebar.info('Logged out', icon="ℹ️")
+
+
+st.warning('Currently in development. This is a early version.', icon="🐞")
 
