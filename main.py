@@ -1,4 +1,5 @@
 import streamlit as st
+import hashlib
 
 st.set_page_config(
     page_title="Helpdesk by Michi",
@@ -31,6 +32,10 @@ loginBtn = st.sidebar.button('Sign in')
 
 if loginBtn:
     st.sidebar.info('Logged in', icon="ℹ️")
+    st.session_state['email'] = email
+    passwordHashed = hashlib.sha256(password.encode())
+    st.session_state['password'] = passwordHashed.hexdigest()
+    st.sidebar.info(st.session_state.password)
 else:
     st.sidebar.info('Logged out', icon="ℹ️")
 
