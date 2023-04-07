@@ -1,6 +1,8 @@
 import streamlit as st
-import psycopg2
 import pandas as pd
+import branding
+
+branding.loadBranding()
 
 st.write("""
 # Customers

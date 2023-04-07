@@ -1,33 +1,19 @@
 import streamlit as st
-from PIL import Image
-import psycopg2
 import pandas as pd
+import dbfunctions
+import branding
          
-# st.sidebar.markdown("# Your tickets")
-# image = Image.open("assets/ticket.png")
-# st.sidebar.image(image, caption='Sunrise by the mountains')
-
-# Create a connection to database
-@st.cache_resource
-def connectDatabase():
-    conn = psycopg2.connect(
-        host=st.secrets["DBHOST"],
-        database="helpdesk",
-        user=st.secrets["DBUSER"],
-        password=st.secrets["DBPASSWORD"],
-        port="5454",)
-    cursor = conn.cursor()
-    return cursor
+branding.loadBranding()
 
 # create a new ticket
 def createTicket(name):
-    db = connectDatabase()
+    db = dbfunctions.connectDatabase()
     db.execute("INSERT INTO ticket (name, fk_statusid, fk_userid, fk_customerid) VALUES ('{name}', 1, 1, 1);")
 
 # load tickets from database
 @st.cache_data(ttl=120)
 def loadTickets():
-    db = connectDatabase()
+    db = dbfunctions.connectDatabase()
     db.execute("SELECT * FROM alltickets")
     result = db.fetchall()
     colnames = [desc[0] for desc in db.description]
@@ -37,7 +23,6 @@ def loadTickets():
 st.write("""
 # Tickets
 """)
-
 
 ticketList, newTicket = st.tabs(["Tickets", "Create new ticket"])
 
