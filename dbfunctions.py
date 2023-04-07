@@ -13,3 +13,9 @@ def connectDatabase():
     conn.autocommit = True
     cursor = conn.cursor()
     return cursor
+
+def executeQuery(query):
+    conn = connectDatabase()
+    conn.execute(query)
+    result = conn.fetchall()
+    return result
