@@ -5,8 +5,10 @@ import branding
 branding.loadBranding()
 
 # create a new ticket
-def createTicket(name, desc):
-    dbfunctions.executeQuery(f"INSERT INTO ticket (name, description, fk_statusid, fk_userid, fk_customerid) VALUES ('{name}', '{desc}', 1, 1, 1);")
+def createTicket(name, desc, customer, assign):
+    customerid = dbfunctions.executeQuery(f"SELECT DISTINCT customerid, name from \"customer\" WHERE name = '{customer}';")[0][0]
+    userid = dbfunctions.executeQuery(f"SELECT DISTINCT userid, username from \"user\" WHERE username = '{assign}';")[0][0]
+    dbfunctions.executeWithoutFetch(f"INSERT INTO ticket (name, description, fk_statusid, fk_userid, fk_customerid) VALUES ('{name}', '{desc}', 1, {userid}, {customerid});")
 
 st.write("""
 # Tickets
@@ -28,12 +30,18 @@ with newTicket:
     with st.container():
         newTicketname = st.text_input('Ticketname')
         customerList = dbfunctions.executeQuery(f"SELECT \"name\" FROM customer;")
+        customers = ()
+        for customer in customerList:
+            customers = customers + (customer[0],)
         userList = dbfunctions.executeQuery(f"SELECT username FROM \"user\";")
+        users = ()
+        for user in userList:
+            users = users + (user[0],)
         ticketDescription = st.text_area('Description')
-        st.selectbox('Customer', customerList)
-        st.selectbox('Assign to', userList)
+        ticketCustomer = st.selectbox('Customer', customers)
+        ticketAssignment = st.selectbox('Assign to', users)
         createTicketBtn = st.button('Create ticket')
 
     if createTicketBtn:
-        createTicket(newTicketname, ticketDescription)
+        createTicket(newTicketname, ticketDescription, ticketCustomer, ticketAssignment)
 

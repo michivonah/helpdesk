@@ -21,6 +21,11 @@ def executeQuery(query):
     result = conn.fetchall()
     return result
 
+def executeWithoutFetch(query):
+    conn = connectDatabase()
+    conn.execute(query)
+    return None
+
 #@st.cache_data(ttl=30)
 def loadTable(query):
     conn = connectDatabase()
