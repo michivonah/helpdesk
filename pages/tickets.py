@@ -6,19 +6,18 @@ import branding
 branding.loadBranding()
 
 # create a new ticket
-def createTicket(name):
-    db = dbfunctions.connectDatabase()
-    db.execute("INSERT INTO ticket (name, fk_statusid, fk_userid, fk_customerid) VALUES ('{name}', 1, 1, 1);")
+def createTicket(name, desc):
+    dbfunctions.executeQuery(f"INSERT INTO ticket (name, description, fk_statusid, fk_userid, fk_customerid) VALUES ('{name}', '{desc}', 1, 1, 1);")
 
 # load tickets from database
-@st.cache_data(ttl=120)
+#@st.cache_data(ttl=30)
 def loadTickets():
     db = dbfunctions.connectDatabase()
     db.execute("SELECT * FROM alltickets")
     result = db.fetchall()
     colnames = [desc[0] for desc in db.description]
     df = pd.DataFrame(result, columns=colnames)
-    st.dataframe(df)
+    return df
 
 st.write("""
 # Tickets
@@ -30,7 +29,7 @@ with ticketList:
     st.write("""
     Here you can see all your tickets:
     """)
-    loadTickets()
+    st.dataframe(loadTickets())
 
 with newTicket:
     st.write("""
@@ -38,13 +37,15 @@ with newTicket:
     """)
     with st.container():
         newTicketname = st.text_input('Ticketname')
-        st.text_input('Description')
-        st.selectbox('Customer',('Email', 'Home phone', 'Mobile phone'))
-        st.selectbox('Assign to',('Email', 'Home phone', 'Mobile phone'))
+        customerList = dbfunctions.executeQuery(f"SELECT \"name\" FROM customer;")
+        userList = dbfunctions.executeQuery(f"SELECT username FROM \"user\";")
+        ticketDescription = st.text_area('Description')
+        st.selectbox('Customer', customerList)
+        st.selectbox('Assign to', userList)
         createTicketBtn = st.button('Create ticket')
 
     if createTicketBtn:
-        createTicket(newTicketname)
+        createTicket(newTicketname, ticketDescription)
 
 
 
