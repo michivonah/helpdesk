@@ -65,8 +65,9 @@ ALTER TABLE ticket ADD FOREIGN KEY(fk_userid) REFERENCES "user"(userid);
 ALTER TABLE ticket ADD FOREIGN KEY(fk_customerid) REFERENCES customer(customerid);
 
 -- CREATE DEFAULT USER GROUPS
-INSERT INTO usergroup (name, admin)
-	VALUES('SYSTEM', true);
+INSERT INTO usergroup (name, admin) VALUES
+('SYSTEM', true),
+('user', false);
 
 -- CREATE DEFAULT USERS
 INSERT INTO "user" (username, password) VALUES
