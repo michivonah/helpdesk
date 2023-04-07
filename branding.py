@@ -8,8 +8,9 @@ def loadBranding():
         layout="wide",
         initial_sidebar_state="expanded",
         menu_items={
-            'About': "# Helpdesk by Michi von Ah"
+            'About': "### Helpdesk by Michi von Ah \n [View on Github](https://github.com/michivonah/helpdesk)"
         }
     )
-    logo = Image.open('pages/assets/ticket.png')
-    st.sidebar.image(logo)
+    # st.sidebar.markdown('### Helpdesk')
+    #logo = Image.open('pages/assets/ticket.png')
+    #st.sidebar.image(logo)
