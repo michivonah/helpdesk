@@ -7,10 +7,11 @@ import webbrowser
 branding.loadBranding()
 
 def createUser(email, password, username):
-    db = dbfunctions.connectDatabase()
-    db.execute(f"INSERT INTO \"user\" (username, password, mail, fk_usergroupid) VALUES ('{username}', '{password}', '{email}', 2);")
+    dbfunctions.executeQuery(f"INSERT INTO \"user\" (username, password, mail, fk_usergroupid) VALUES ('{username}', '{password}', '{email}', 2);")
+    userdata = dbfunctions.executeQuery(f"SELECT DISTINCT username, password, userid from \"user\" WHERE mail = '{email}';")
     st.session_state['loginSucceed'] = True
     st.session_state['username'] = username
+    st.session_state['userid'] = userdata[0][2]
     st.sidebar.success('Account created.', icon="✅")
 
 def collectUserinfo(email, password):
@@ -24,16 +25,16 @@ def collectUserinfo(email, password):
 def loginUser(email, password):
     userdata = dbfunctions.executeQuery(f"SELECT DISTINCT username, password, userid from \"user\" WHERE mail = '{email}';")
     if userdata:
-        for value in userdata:
-            username = value[0]
-            correctPW = value[1]
-            userid = value[2]
+        username = userdata[0][0]
+        correctPW = userdata[0][1]
+        userid = userdata[0][2]
         if password == correctPW:
             st.session_state['loginSucceed'] = True
             st.session_state['username'] = username
             st.session_state['userid'] = userid
             st.info('Welcome back', icon="👋🏻")
         else:
+            st.session_state['loginSucceed'] = False
             st.warning('Wrong password')
     else:
         createUser(email, password, email)
@@ -67,6 +68,5 @@ if loginBtn:
     st.session_state['email'] = email
     passwordHashed = hashlib.sha256(password.encode())
     st.session_state['password'] = passwordHashed.hexdigest()
-    st.session_state['loginSucceed'] = False
     loginUser(email, st.session_state.password)
 

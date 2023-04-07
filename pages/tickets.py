@@ -1,5 +1,4 @@
 import streamlit as st
-import pandas as pd
 import dbfunctions
 import branding
          
@@ -9,32 +8,23 @@ branding.loadBranding()
 def createTicket(name, desc):
     dbfunctions.executeQuery(f"INSERT INTO ticket (name, description, fk_statusid, fk_userid, fk_customerid) VALUES ('{name}', '{desc}', 1, 1, 1);")
 
-# load tickets from database
-#@st.cache_data(ttl=30)
-def loadTickets():
-    db = dbfunctions.connectDatabase()
-    db.execute("SELECT * FROM alltickets")
-    result = db.fetchall()
-    colnames = [desc[0] for desc in db.description]
-    df = pd.DataFrame(result, columns=colnames)
-    return df
-
 st.write("""
 # Tickets
 """)
 
-ticketList, newTicket = st.tabs(["Tickets", "Create new ticket"])
+ticketList, myTickets, newTicket = st.tabs(["All Tickets", "My Tickets", "Create new ticket"])
 
 with ticketList:
-    st.write("""
-    Here you can see all your tickets:
-    """)
-    st.dataframe(loadTickets())
+    showClosedTickets = st.checkbox('Show completed tickets')
+    if showClosedTickets:
+        st.dataframe(dbfunctions.loadTable("SELECT * FROM alltickets ORDER BY \"Ticketnumber\""), use_container_width=True)
+    else:
+        st.dataframe(dbfunctions.loadTable("SELECT * FROM alltickets WHERE \"Status\" = 'Open' ORDER BY \"Ticketnumber\""), use_container_width=True)
+
+with myTickets:
+    st.dataframe(dbfunctions.loadTable(f"SELECT * FROM alltickets WHERE \"Status\" = 'Open' AND \"Assigned to\" = '{st.session_state.username}' ORDER BY \"Ticketnumber\""), use_container_width=True)
 
 with newTicket:
-    st.write("""
-    Here you can create a new ticket:
-    """)
     with st.container():
         newTicketname = st.text_input('Ticketname')
         customerList = dbfunctions.executeQuery(f"SELECT \"name\" FROM customer;")
@@ -46,6 +36,4 @@ with newTicket:
 
     if createTicketBtn:
         createTicket(newTicketname, ticketDescription)
-
-
 
