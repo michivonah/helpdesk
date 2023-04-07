@@ -8,8 +8,8 @@ INSERT INTO "user" (username, password, mail) VALUES
     ('max', 'max', 'max@example.com');
 
 INSERT INTO "status" (name) VALUES
-    ('Offen'),
-    ('Abgeschlossen');
+    ('Open'),
+    ('Closed');
 
 INSERT INTO "customer" (name) VALUES
     ('ABC Buchstaben GmbH'),
