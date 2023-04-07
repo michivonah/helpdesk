@@ -40,7 +40,7 @@ def loginUser(email, password):
         createUser(email, password, email)
 
 st.write("""
-# Helpdesk by Michi
+# mangoTicket by Michi
 """)
 
 metricAllTickets, metrinOpenTickets = st.columns(2)

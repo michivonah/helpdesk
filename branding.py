@@ -3,14 +3,14 @@ from PIL import Image
 
 def loadBranding():
     st.set_page_config(
-        page_title="Helpdesk by Michi",
-        page_icon="🎟️",
+        page_title="mangoTicket",
+        page_icon="logo/logo.png",
         layout="wide",
         initial_sidebar_state="expanded",
         menu_items={
-            'About': "### Helpdesk by Michi von Ah \n [View on Github](https://github.com/michivonah/helpdesk)"
+            'About': "### mangoTicket by Michi \n [View on Github](https://github.com/michivonah/helpdesk)"
         }
     )
     # st.sidebar.markdown('### Helpdesk')
-    #logo = Image.open('pages/assets/ticket.png')
+    #logo = Image.open('logo/logo.png')
     #st.sidebar.image(logo)
