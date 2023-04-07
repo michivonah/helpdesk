@@ -2,6 +2,7 @@ import streamlit as st
 import hashlib
 import branding
 import dbfunctions
+import webbrowser
 
 branding.loadBranding()
 
@@ -39,12 +40,21 @@ def loginUser(email, password):
 
 st.write("""
 # Helpdesk by Michi
-This is a simple helpdesk tool.
-
-[View on Github](https://github.com/michivonah/helpdesk)
 """)
-         
-st.warning('Currently in development. This is a early version.', icon="🐞")
+
+metricAllTickets, metrinOpenTickets = st.columns(2)
+countAllTickets = dbfunctions.executeQuery("SELECT * from \"alltickets-count\"")
+countOpenTickets = dbfunctions.executeQuery("SELECT * from \"opentickets-count\"")
+metricAllTickets.metric(label="All tickets", value=f"{countAllTickets[0][0]}")
+metrinOpenTickets.metric(label="Open tickets", value=f"{countOpenTickets[0][0]}", delta=f"{round(countOpenTickets[0][0] / countAllTickets[0][0] * -100)} %")
+
+st.write("""
+This is a simple helpdesk tool. You can create different users and assign tickets to them. You can also create a database with customers. Each ticket can be assigned to a customer.
+The tool is currently under development and still has some bugs/problems. If you have a suggestion, feel free to create an issue on GitHub so I can follow up on it.
+""")
+
+if st.button("View on GitHub"):
+    webbrowser.open_new_tab("https://github.com/michivonah/helpdesk")
 
 st.sidebar.markdown("# Login/Register")
 
