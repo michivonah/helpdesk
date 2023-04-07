@@ -8,6 +8,7 @@ import pandas as pd
 # st.sidebar.image(image, caption='Sunrise by the mountains')
 
 # Create a connection to database
+@st.cache_resource
 def connectDatabase():
     conn = psycopg2.connect(
         host=st.secrets["DBHOST"],
@@ -24,6 +25,7 @@ def createTicket(name):
     db.execute("INSERT INTO ticket (name, fk_statusid, fk_userid, fk_customerid) VALUES ('{name}', 1, 1, 1);")
 
 # load tickets from database
+@st.cache_data(ttl=120)
 def loadTickets():
     db = connectDatabase()
     db.execute("SELECT * FROM alltickets")
