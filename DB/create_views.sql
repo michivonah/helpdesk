@@ -18,3 +18,7 @@ DROP VIEW IF EXISTS "opentickets-count";
 CREATE VIEW "opentickets-count" AS
 	SELECT COUNT(*) AS "Open Tickets" FROM ticket
 		WHERE fk_statusid = (SELECT DISTINCT statusid FROM status WHERE "name" = 'Open');
+
+DROP VIEW IF EXISTS "allcustomers";
+CREATE VIEW "allcustomers" AS
+	SELECT customerid AS "Customer Nr.", "name" AS "Name", "mail" AS "E-Mail Address", "phone" AS "Phone", "website" AS "Website", "address" AS "Customer Address" FROM customer;
