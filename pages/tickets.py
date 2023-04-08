@@ -17,12 +17,41 @@ def loadTicketlist(closed, orderBy):
     else:
         st.dataframe(dbfunctions.loadTable(f"SELECT * FROM alltickets WHERE \"Status\" = 'Open' ORDER BY \"{orderBy}\""), use_container_width=True)
 
-def getCustomerList():
-    customerList = dbfunctions.executeQuery(f"SELECT \"name\" FROM customer;")
-    customers = ()
-    for customer in customerList:
-        customers = customers + (customer[0],)
-    return customers
+def getSelectableList(field, table):
+    listQuery = dbfunctions.executeQuery(f'SELECT "{field}" FROM {table};')
+    list = ()
+    for listItem in listQuery:
+        list = list + (listItem[0],)
+    return list
+
+def getSelectableTicketList(query):
+    listQuery = dbfunctions.executeQuery(query)
+    list = ()
+    for listItem in listQuery:
+        list = list + (f"{listItem[0]} - {listItem[1]}",)
+    return list
+
+def openTicket(ticketid):
+    st.write(f"### Ticket Nr. {ticketid}")
+    # get data
+    ticketInfo = dbfunctions.executeQuery(f'SELECT * FROM ticket WHERE ticketid = {ticketid}')
+    # build page
+    st.markdown(ticketInfo[0][2])
+    ticketIdField, ticketNameField = st.columns(2)
+    ticketIdField.text_input('Ticket Nr', ticketid, disabled=True)
+    ticketNameField.text_input('Ticketname', ticketInfo[0][1], disabled=True)
+    st.text_area('Description', ticketInfo[0][2], disabled=True)
+    if int(ticketInfo[0][3]) == 1:
+        ticketClosed = st.checkbox('Ticket closed', False)
+    else:
+        ticketClosed = st.checkbox('Ticket closed', True)
+    saveBtn = st.button('Save changes')
+    if saveBtn:
+        updateTicket()
+
+def updateTicket():
+    st.warning('Ticket not modified', icon="⚠️")
+    
 
 st.write("""
 # Tickets
@@ -31,7 +60,7 @@ st.write("""
 if 'username' not in st.session_state:
     st.session_state['username'] = "SYSTEM"
 
-ticketList, myTickets, newTicket = st.tabs(["All Tickets", "My Tickets", "Create new ticket"])
+ticketList, myTickets, newTicket, ticketDetails = st.tabs(["All Tickets", "My Tickets", "Create new ticket", "View ticket"])
 
 with ticketList:
     toggleClose, toggleCustomer = st.columns(2)
@@ -39,7 +68,7 @@ with ticketList:
     orderByName = toggleClose.checkbox('Order by name')
     selectedCustomers = toggleCustomer.multiselect(
     'Choose customers to show',
-    getCustomerList())
+    getSelectableList('name', 'customer'))
     if orderByName:
         loadTicketlist(showClosedTickets, 'Ticketname')
     else:
@@ -51,7 +80,7 @@ with myTickets:
 with newTicket:
     with st.container():
         newTicketname = st.text_input('Ticketname')
-        customers = getCustomerList()
+        customers = getSelectableList('name', 'customer')
         userList = dbfunctions.executeQuery(f"SELECT username FROM \"user\";")
         users = ()
         for user in userList:
@@ -63,4 +92,9 @@ with newTicket:
 
     if createTicketBtn:
         createTicket(newTicketname, ticketDescription, ticketCustomer, ticketAssignment)
+
+with ticketDetails:
+    # selectTicket = st.selectbox('Select ticket', getSelectableTicketList('SELECT ticketid, "name" FROM ticket;'))
+    selectTicket = st.selectbox('Select ticket', getSelectableList('ticketid', 'ticket'))
+    openTicket(selectTicket)
 
