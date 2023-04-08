@@ -17,7 +17,7 @@ if st.session_state.loginSucceed:
     saveBtn = st.button('Save changes')
     st.info(f"Your UserID: {int(st.session_state.userid)}")
     if saveBtn:
-        dbfunctions.executeQuery(f"UPDATE \"user\" SET username = '{newUsername}' WHERE userid = {int(st.session_state.userid)};")
+        dbfunctions.executeWithoutFetch(f"UPDATE \"user\" SET username = '{newUsername}' WHERE userid = {int(st.session_state.userid)};")
         st.success('Username changed', icon="✅")
 else:
     st.write('You are not logged in. Please log in before accessing the settings.')
