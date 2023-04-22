@@ -18,7 +18,7 @@ def loadTicketlist(closed, orderBy):
         st.dataframe(dbfunctions.loadTable(f"SELECT * FROM alltickets WHERE \"Status\" = 'Open' ORDER BY \"{orderBy}\""), use_container_width=True)
 
 def getSelectableList(field, table):
-    listQuery = dbfunctions.executeQuery(f'SELECT "{field}" FROM {table};')
+    listQuery = dbfunctions.executeQuery(f'SELECT "{field}" FROM {table} ORDER BY {field};')
     list = ()
     for listItem in listQuery:
         list = list + (listItem[0],)
