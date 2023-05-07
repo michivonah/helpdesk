@@ -14,3 +14,6 @@ def loadBranding():
     # st.sidebar.markdown('### Helpdesk')
     #logo = Image.open('logo/logo.png')
     #st.sidebar.image(logo)
+    # Hide streamlit branding
+    hide_streamlit_style = "<style> #MainMenu {visibility: hidden;} footer {visibility: hidden;} </style>"
+    st.markdown(hide_streamlit_style, unsafe_allow_html=True)
