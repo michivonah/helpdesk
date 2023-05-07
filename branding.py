@@ -4,7 +4,7 @@ from PIL import Image
 def loadBranding():
     st.set_page_config(
         page_title="mangoTicket",
-        page_icon="logo/logo.png",
+        page_icon="logo/favicon.png",
         layout="wide",
         initial_sidebar_state="expanded",
         menu_items={
