@@ -18,7 +18,7 @@ def loadTicketlist(closed, orderBy):
         st.dataframe(db.loadTable(f"SELECT * FROM alltickets WHERE \"Status\" = 'Open' ORDER BY \"{orderBy}\""), use_container_width=True)
 
 def getSelectableList(field, table):
-    listQuery = db.executeQuery(f'SELECT "{field}" FROM {table} ORDER BY {field};')
+    listQuery = db.executeQuery(f'SELECT "{field}" FROM "{table}" ORDER BY {field};')
     list = ()
     for listItem in listQuery:
         list = list + (listItem[0],)
@@ -45,16 +45,18 @@ def openTicket(ticketid):
         ticketClosed = st.checkbox('Ticket closed', False)
     else:
         ticketClosed = st.checkbox('Ticket closed', True)
+    users = getSelectableList('username', 'userlist')
+    ticketAssignment = st.selectbox('Assign to', users)
     saveBtn = st.button('Save changes')
     if saveBtn:
-        updateTicket(ticketid, ticketName, ticketDescription, ticketClosed)
+        updateTicket(ticketid, ticketName, ticketDescription, ticketClosed, ticketAssignment)
 
-def updateTicket(ticketid, name, desc, closed):
+def updateTicket(ticketid, name, desc, closed, assignment):
     if closed:
         closedName = "Closed"
     else:
         closedName = "Open"
-    db.executeWithoutFetch(f"UPDATE ticket SET name = '{name}', description = '{desc}', \"fk_statusid\" = (SELECT DISTINCT statusid FROM status WHERE \"name\" = '{closedName}')  WHERE ticketid = {ticketid};")
+    db.executeWithoutFetch(f"UPDATE ticket SET name = '{name}', description = '{desc}', \"fk_statusid\" = (SELECT DISTINCT statusid FROM status WHERE \"name\" = '{closedName}'), \"fk_userid\" = (SELECT DISTINCT userid FROM \"user\" WHERE \"username\" = '{assignment}')  WHERE ticketid = {ticketid};")
     st.success("Ticket modified", icon="✅")
     
 
@@ -87,10 +89,7 @@ with newTicket:
     with st.container():
         newTicketname = st.text_input('Ticketname')
         customers = getSelectableList('name', 'customer')
-        userList = db.executeQuery(f"SELECT username FROM \"user\";")
-        users = ()
-        for user in userList:
-            users = users + (user[0],)
+        users = getSelectableList('username', 'userlist')
         ticketDescription = st.text_area('Description')
         ticketCustomer = st.selectbox('Customer', customers)
         ticketAssignment = st.selectbox('Assign to', users)
