@@ -22,3 +22,7 @@ CREATE VIEW "opentickets-count" AS
 DROP VIEW IF EXISTS "allcustomers";
 CREATE VIEW "allcustomers" AS
 	SELECT customerid AS "Customer Nr.", "name" AS "Name", "mail" AS "E-Mail Address", "phone" AS "Phone", "website" AS "Website", "address" AS "Customer Address" FROM customer;
+
+DROP VIEW IF EXISTS "userlist";
+CREATE VIEW "userlist" AS
+	SELECT * FROM "user" WHERE username != 'SYSTEM';
