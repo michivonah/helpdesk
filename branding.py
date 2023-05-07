@@ -4,14 +4,14 @@ from PIL import Image
 def loadBranding():
     st.set_page_config(
         page_title="mangoTicket",
-        page_icon="logo/favicon.png",
+        page_icon="🎟️",
         layout="wide",
         initial_sidebar_state="expanded",
         menu_items={
             'About': "### mangoTicket by Michi \n [View on Github](https://github.com/michivonah/helpdesk)"
         }
     )
-    # st.sidebar.markdown('### Helpdesk')
+    st.sidebar.markdown('### mangoTicket 🥭')
     #logo = Image.open('logo/logo.png')
     #st.sidebar.image(logo)
     # Hide streamlit branding
