@@ -40,7 +40,7 @@ def openTicket(ticketid):
     ticketIdField, ticketNameField = st.columns(2)
     ticketIdField.text_input('Ticket Nr', ticketid, disabled=True)
     ticketName = ticketNameField.text_input('Ticketname', ticketInfo[0][1])
-    ticketDescription = st.text_area('Description', ticketInfo[0][2])
+    ticketDescription = st.text_area('Description', ticketInfo[0][2], key="editTicketDesc")
     if int(ticketInfo[0][3]) == 1:
         ticketClosed = st.checkbox('Ticket closed', False)
     else:
