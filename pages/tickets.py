@@ -45,11 +45,14 @@ def openTicket(ticketid):
         ticketClosed = st.checkbox('Ticket closed', False)
     else:
         ticketClosed = st.checkbox('Ticket closed', True)
-    users = getSelectableList('username', 'userlist')
-    ticketAssignment = st.selectbox('Assign to', users)
+    usersList = list(getSelectableList('username', 'user'))
+    assignedName = db.executeQuery(f"SELECT username FROM \"user\" WHERE userid = {ticketInfo[0][5]}")[0][0]
+    usersList.remove(assignedName)
+    usersList = [assignedName] + usersList
+    assignmentBox = st.selectbox('Assign to', usersList)
     saveBtn = st.button('Save changes')
     if saveBtn:
-        updateTicket(ticketid, ticketName, ticketDescription, ticketClosed, ticketAssignment)
+        updateTicket(ticketid, ticketName, ticketDescription, ticketClosed, assignmentBox)
 
 def updateTicket(ticketid, name, desc, closed, assignment):
     if closed:
