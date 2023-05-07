@@ -21,5 +21,10 @@ python3 -m streamlit run main.py
 # Docker
 Run container
 ```bash
-docker run -p 8501:8501 -e DBHOST=example.com -e DBUSER=helpdesk -e DBPASSWORD=helpdesk michivonah/mangoticket
+docker run --name mangoticketAPP -p 8501:8501 -e DBHOST=mangoticketDB -e DBUSER=helpdesk -e DBPASSWORD=helpdesk michivonah/mangoticket
+```
+
+Run container for db
+```bash
+docker run --name mangoticketDB -e POSTGRES_DB=helpdesk -e POSTGRES_USER=helpdesk -e POSTGRES_PASSWORD=helpdesk -d postgres
 ```
