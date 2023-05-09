@@ -28,3 +28,36 @@ Run container for db
 ```bash
 docker run --name mangoticketDB -e POSTGRES_DB=helpdesk -e POSTGRES_USER=helpdesk -e POSTGRES_PASSWORD=helpdesk -d postgres
 ```
+
+## Docker compose
+```bash
+docker-compose up -d
+```
+
+```yml
+version: '3.3'
+services:
+    app:
+        container_name: mangoticketAPP
+        ports:
+            - '8501:8501'
+        environment:
+            - DBHOST=mangoticketDB
+            - DBUSER=helpdesk
+            - DBPASSWORD=helpdesk
+        networks:
+            - mangoticketNET
+        image: michivonah/mangoticket
+    db:
+        container_name: mangoticketDB
+        environment:
+            - POSTGRES_DB=helpdesk
+            - POSTGRES_USER=helpdesk
+            - POSTGRES_PASSWORD=helpdesk
+        networks:
+            - mangoticketNET
+        image: postgres
+networks:
+  mangoticketNET:
+    name: mangoticketNET
+```
