@@ -7,10 +7,10 @@ import pandas as pd
 def connectDatabase():
     conn = psycopg2.connect(
         host=st.secrets["DBHOST"],
-        database="helpdesk",
+        database=st.secrets["DBNAME"],
         user=st.secrets["DBUSER"],
         password=st.secrets["DBPASSWORD"],
-        port="5454",)
+        port=st.secrets["DBPORT"],)
     conn.autocommit = True
     cursor = conn.cursor()
     return cursor

@@ -8,7 +8,9 @@ WORKDIR /app/
 COPY . .
 
 # Set enviromental variables
-ENV DBHOST example.com
+ENV DBHOST mangoticketDB
+ENV DBPORT 5432
+ENV DBNAME helpdesk
 ENV DBUSER helpdesk
 ENV DBPASSWORD helpdesk
 
