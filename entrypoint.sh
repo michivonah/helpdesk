@@ -6,6 +6,8 @@ cd /app/
 # Create secrets.toml
 echo "" > .streamlit/secrets.toml
 echo 'DBHOST = "'"$DBHOST"'"' >> .streamlit/secrets.toml
+echo 'DBPORT = "'"$DBPORT"'"' >> .streamlit/secrets.toml
+echo 'DBNAME = "'"$DBNAME"'"' >> .streamlit/secrets.toml
 echo 'DBUSER = "'"$DBUSER"'"' >> .streamlit/secrets.toml
 echo 'DBPASSWORD = "'"$DBPASSWORD"'"' >> .streamlit/secrets.toml
 
