@@ -1,6 +1,14 @@
 # mongoTicket by Michi 🥭
 A simple helpdesk tool based on python3, streamlit & postgres.
 
+## Table of contents
+- [Features](#features)
+- [Planend Features](#planned-features)
+- [Self host](#self-host)
+- [Docker](#docker)
+- [Docker compose](#docker-compose)
+- [Manually run with python](#manually-run-with-python)
+
 ## Features
 - Self hosted
 - Free
@@ -68,7 +76,7 @@ Run following command to start up the containers
 docker-compose up -d
 ```
 
-You're done! Now visit http://YOURHOST:8501 in your browser
+You're done! Now visit http://localhost:8501 in your browser
 
 ## Manually run with python
 > You need a postgres database & python3 installed on your system for continue with the following steps
