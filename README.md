@@ -1,24 +1,28 @@
-# helpdesk
+# mongoTicket by Michi 🥭
+A simple helpdesk tool based on python3, streamlit & postgres.
 
-# Requirements
-- Python3 & Pip3 installed
-- Streamlink & Nicegui installed
-- PostgreSQL
-- Docker Engine & Docker Compose
+## Features
+- Self hosted
+- Free
+- Open Source
+- Create tickets
+- Create customers
+- Self register a user
+- Assign a ticket to a customer and a user
 
-# Run app
-Install python packages
-```bash
-pip3 install psycopg2
-pip3 install psycopg2-binary
-```
+## Planned features
+- [ ] User management
+- [ ] Disable self register for users
+- [ ] Permissions
+- [ ] Organizations
+- [ ] Custom branding
+- [ ] Add times to ticket
+- [x] Self hostable
 
-Run app
-```bash
-python3 -m streamlit run main.py
-```
+If you wish a feature or experience a bug create a issue and assign a tag to it.
 
-# Docker
+# Self host
+## Docker
 Run container
 ```bash
 docker run --name mangoticketAPP -p 8501:8501 -e DBHOST=mangoticketDB -e DBUSER=helpdesk -e DBPASSWORD=helpdesk michivonah/mangoticket
@@ -30,10 +34,7 @@ docker run --name mangoticketDB -e POSTGRES_DB=helpdesk -e POSTGRES_USER=helpdes
 ```
 
 ## Docker compose
-```bash
-docker-compose up -d
-```
-
+Copy following yml into a file called ```docker-compose.yml```
 ```yml
 version: '3.3'
 services:
@@ -60,4 +61,43 @@ services:
 networks:
   mangoticketNET:
     name: mangoticketNET
+```
+
+Run following command to start up the containers
+```bash
+docker-compose up -d
+```
+
+You're done! Now visit http://YOURHOST:8501 in your browser
+
+## Manually run with python
+> You need a postgres database & python3 installed on your system for continue with the following steps
+
+Install requirements
+```bash
+pip3 install --upgrade pip
+pip3 install pipenv
+pip3 install streamlit
+pip3 install --no-cache-dir -r requirements.txt
+pip3 install psycopg2
+pip3 install psycopg2-binary
+```
+
+Create secrets.toml file in current dirctory
+```bash
+nano .streamlit/secrets.toml
+```
+
+Copy following toml into the created file & change the variables
+```bash
+DBHOST = "YOURHOST"
+DBPORT = "5321"
+DBNAME = "helpdesk"
+DBUSER = "YOURUSER"
+DBPASSWORD = "YOURPASSWORD"
+```
+
+Run app
+```bash
+python3 -m streamlit run main.py
 ```
