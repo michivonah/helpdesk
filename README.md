@@ -41,6 +41,8 @@ Run container for db
 docker run --name mangoticketDB -e POSTGRES_DB=helpdesk -e POSTGRES_USER=helpdesk -e POSTGRES_PASSWORD=helpdesk -d postgres
 ```
 
+You're done! Now visit http://localhost:8501 in your browser. The default admin credentials are **admin** with the password **admin**.
+
 ## Docker compose
 Copy following yml into a file called ```docker-compose.yml```
 ```yml
@@ -77,7 +79,7 @@ Run following command to start up the containers
 docker-compose up -d
 ```
 
-You're done! Now visit http://localhost:8501 in your browser
+You're done! Now visit http://localhost:8501 in your browser. The default admin credentials are **admin** with the password **admin**.
 
 ## Manually run with python
 > You need a postgres database & python3 installed on your system for continue with the following steps
@@ -111,3 +113,5 @@ Run app
 ```bash
 python3 -m streamlit run main.py
 ```
+
+You're done! Now visit http://localhost:8501 in your browser. The default admin credentials are **admin** with the password **admin**.
