@@ -70,6 +70,7 @@ networks:
   mangoticketNET:
     name: mangoticketNET
 ```
+> Please replace the values POSTGRES_PASSWORD & DB_PASSWORD with a secure password!
 
 Run following command to start up the containers
 ```bash
@@ -104,6 +105,7 @@ DBNAME = "helpdesk"
 DBUSER = "YOURUSER"
 DBPASSWORD = "YOURPASSWORD"
 ```
+> Please use a secure password instead of "YOURPASSWORD"!
 
 Run app
 ```bash
