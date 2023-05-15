@@ -71,5 +71,10 @@ INSERT INTO usergroup (name, admin) VALUES
 
 -- CREATE DEFAULT USERS
 INSERT INTO "user" (username, password) VALUES
-    ('SYSTEM', 'SYSTEM'),
-    ('admin', 'admin');
+    ('SYSTEM', '0f8afe0239e42215735340b80c8de401aa7304b2470304165b4c15e37ee392e5'),
+    ('admin', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918');
+
+-- CREATE STATUS TYPES
+INSERT INTO "status" (name) VALUES
+    ('Open'),
+    ('Closed');

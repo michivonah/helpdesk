@@ -7,10 +7,6 @@ INSERT INTO "user" (username, password, mail) VALUES
     ('fritz', 'fritz', 'fritz@example.com'),
     ('max', 'max', 'max@example.com');
 
-INSERT INTO "status" (name) VALUES
-    ('Open'),
-    ('Closed');
-
 INSERT INTO "customer" (name) VALUES
     ('ABC Buchstaben GmbH'),
     ('XYZ Firma'),
