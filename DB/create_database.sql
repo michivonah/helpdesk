@@ -78,3 +78,7 @@ INSERT INTO "user" (username, password) VALUES
 INSERT INTO "status" (name) VALUES
     ('Open'),
     ('Closed');
+
+-- CREATE DEFAULT TICKET
+INSERT INTO "ticket" (name, fk_statusid, fk_userid, fk_customerid) VALUES
+    ('Hello World!', 2, 1, 1);
