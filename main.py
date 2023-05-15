@@ -7,7 +7,7 @@ import webbrowser
 branding.loadBranding()
 
 def createUser(email, password, username):
-    dbfunctions.executeQuery(f"INSERT INTO \"user\" (username, password, mail, fk_usergroupid) VALUES ('{username}', '{password}', '{email}', 2);")
+    dbfunctions.executeWithoutFetch(f"INSERT INTO \"user\" (username, password, mail, fk_usergroupid) VALUES ('{username}', '{password}', '{email}', 2);")
     userdata = dbfunctions.executeQuery(f"SELECT DISTINCT username, password, userid from \"user\" WHERE mail = '{email}';")
     st.session_state['loginSucceed'] = True
     st.session_state['username'] = username
