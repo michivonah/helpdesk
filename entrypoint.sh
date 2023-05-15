@@ -18,6 +18,7 @@ apt-get install postgresql-client -y
 # Run scripts for creating db structure
 echo '"'"$DBHOST"'":"'"$DBPORT"'":"'"$DBNAME"'":"'"$DBUSER"'":"'"$DBPASSWORD"'"' > /root/.pgpass
 chmod 600 /root/.pgpass
+export PGPASSWORD=$DBPASSWORD
 psql -h $DBHOST -p $DBPORT -U $DBUSER -d $DBNAME -f "DB/create_database.sql"
 psql -h $DBHOST -p $DBPORT -U $DBUSER -d $DBNAME -f "DB/create_views.sql"
 
