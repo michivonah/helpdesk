@@ -3,6 +3,7 @@ import hashlib
 import branding
 import dbfunctions
 import webbrowser
+import usermanagement as usr
 
 branding.loadBranding()
 
@@ -32,10 +33,10 @@ def loginUser(email, password):
             st.session_state['loginSucceed'] = True
             st.session_state['username'] = username
             st.session_state['userid'] = userid
-            st.info('Welcome back', icon="👋🏻")
+            st.sidebar.info('Welcome back', icon="👋🏻")
         else:
             st.session_state['loginSucceed'] = False
-            st.warning('Wrong password')
+            st.sidebar.warning('Wrong password')
     else:
         createUser(email, password, email)
 
@@ -54,19 +55,24 @@ This is a simple helpdesk tool. You can create different users and assign ticket
 The tool is currently under development and still has some bugs/problems. If you have a suggestion, feel free to create an issue on GitHub so I can follow up on it.
 """)
 
-if st.button("View on GitHub"):
+if st.button("View project on GitHub"):
     webbrowser.open_new_tab("https://github.com/michivonah/helpdesk")
 
-st.sidebar.markdown("# Login/Register")
+if st.button("Self host"):
+    webbrowser.open_new_tab("https://hub.docker.com/r/michivonah/mangoticket")
 
-st.session_state['loginSucceed'] = False
-email = st.sidebar.text_input('Mail')
-password = st.sidebar.text_input('Password', type="password")        
-loginBtn = st.sidebar.button('Sign in')
+if not usr.checkLogin():
+    st.sidebar.markdown("# Login/Register")
+    st.session_state['loginSucceed'] = False
+    email = st.sidebar.text_input('Mail')
+    password = st.sidebar.text_input('Password', type="password")        
+    loginBtn = st.sidebar.button('Sign in')
 
-if loginBtn:
-    st.session_state['email'] = email
-    passwordHashed = hashlib.sha256(password.encode())
-    st.session_state['password'] = passwordHashed.hexdigest()
-    loginUser(email, st.session_state.password)
+    if loginBtn:
+        st.session_state['email'] = email
+        passwordHashed = hashlib.sha256(password.encode())
+        st.session_state['password'] = passwordHashed.hexdigest()
+        loginUser(email, st.session_state.password)
 
+else:
+    st.sidebar.info('Welcome back', icon="👋🏻")
