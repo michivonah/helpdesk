@@ -10,6 +10,11 @@ def checkLogin():
 def showError():
     st.write('You are not logged in. Please log in before accessing the settings.')
 
+def logout():
+    st.session_state['loginSucceed'] = False
+    st.session_state['username'] = "SYSTEM"
+    st.session_state['userid'] = False
+
 """ Example for use in page
 import usermanagement as usr 
 

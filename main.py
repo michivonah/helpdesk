@@ -73,6 +73,13 @@ if not usr.checkLogin():
         passwordHashed = hashlib.sha256(password.encode())
         st.session_state['password'] = passwordHashed.hexdigest()
         loginUser(email, st.session_state.password)
+        st.experimental_rerun()
 
 else:
     st.sidebar.info('Welcome back', icon="👋🏻")
+    logoutBtn = st.sidebar.button("Logout")
+
+    if logoutBtn:
+        usr.logout()
+        st.sidebar.info('Logged out')
+        st.experimental_rerun()
