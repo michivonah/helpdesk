@@ -7,6 +7,7 @@ A simple helpdesk tool based on python3, streamlit & postgres.
 - [Self host](#self-host)
 - [Docker](#docker)
 - [Docker compose](#docker-compose)
+- [Build docker image](#build-docker-image)
 - [Manually run with python](#manually-run-with-python)
 
 ## Features
@@ -80,6 +81,29 @@ docker-compose up -d
 ```
 
 You're done! Now visit http://localhost:8501 in your browser. The default admin credentials are **admin** with the password **admin**.
+
+## Build docker image
+Clone git repo
+```bash
+git clone https://github.com/michivonah/helpdesk.git
+```
+
+Open directory
+```bash
+cd helpdesk
+```
+
+Build image
+```bash
+docker build -t mangoticket:latest .
+```
+
+Run container
+```bash
+docker run --name mangoticketAPP -p 8501:8501 -e DBHOST=mangoticketDB -e DBUSER=helpdesk -e DBPASSWORD=helpdesk michivonah/mangoticket
+```
+
+> Please note that you need a running postgres instance
 
 ## Manually run with python
 > You need a postgres database & python3 installed on your system for continue with the following steps
