@@ -1,6 +1,10 @@
 # mongoTicket by Michi 🥭
 A simple helpdesk tool based on python3, streamlit & postgres.
 
+GitHub: [https://github.com/michivonah/helpdesk](https://github.com/michivonah/helpdesk)
+
+Docker Hub: [https://hub.docker.com/r/michivonah/mangoticket](https://hub.docker.com/r/michivonah/mangoticket)
+
 ## Table of contents
 - [Features](#features)
 - [Planend Features](#planned-features)
