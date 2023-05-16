@@ -44,11 +44,15 @@ st.write("""
 # mangoTicket by Michi
 """)
 
-metricAllTickets, metrinOpenTickets = st.columns(2)
+metricAllTickets, metricOpenTickets = st.columns(2)
 countAllTickets = dbfunctions.executeQuery("SELECT * from \"alltickets-count\"")
 countOpenTickets = dbfunctions.executeQuery("SELECT * from \"opentickets-count\"")
+if not (countAllTickets[0][0] * -100) == 0:
+    openTicketDelta = round(countOpenTickets[0][0] / countAllTickets[0][0] * -100)
+else:
+    openTicketDelta = 0
 metricAllTickets.metric(label="All tickets", value=f"{countAllTickets[0][0]}")
-metrinOpenTickets.metric(label="Open tickets", value=f"{countOpenTickets[0][0]}", delta=f"{round(countOpenTickets[0][0] / countAllTickets[0][0] * -100)} %")
+metricOpenTickets.metric(label="Open tickets", value=f"{countOpenTickets[0][0]}", delta=f"{openTicketDelta} %")
 
 st.write("""
 This is a simple helpdesk tool. You can create different users and assign tickets to them. You can also create a database with customers. Each ticket can be assigned to a customer.
