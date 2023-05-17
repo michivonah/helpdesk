@@ -1,6 +1,6 @@
 /*
 SETUP DATABASE ENVIROMENT FOR HELPDESK
-Michi von Ah - April 2023
+Michi von Ah - April/May 2023
 FOR POSTGRESQL
 */
 
@@ -86,21 +86,23 @@ ALTER TABLE ticket ADD FOREIGN KEY(fk_userid) REFERENCES "user"(userid);
 ALTER TABLE ticket ADD FOREIGN KEY(fk_customerid) REFERENCES customer(customerid);
 
 -- SET DEFAULT VALUES
-ALTER TABLE "user" ALTER COLUMN "active" SET DEFAULT 1;
-ALTER TABLE "usergroup" ALTER COLUMN "admin" SET DEFAULT 0;
-ALTER TABLE "organization" ALTER COLUMN "allow_selfregister" SET DEFAULT 0;
+ALTER TABLE "user" ALTER COLUMN "active" SET DEFAULT True;
+ALTER TABLE "user" ALTER COLUMN "fk_usergroupid" SET DEFAULT 2;
+ALTER TABLE "usergroup" ALTER COLUMN "admin" SET DEFAULT False;
+ALTER TABLE "organization" ALTER COLUMN "allow_selfregister" SET DEFAULT False;
 ALTER TABLE "ticket" ALTER COLUMN "fk_statusid" SET DEFAULT 1;
 
 
 -- CREATE DEFAULT USER GROUPS
 INSERT INTO usergroup (name, admin) VALUES
 ('SYSTEM', true),
-('user', false);
+('user', false),
+('admins', true);
 
 -- CREATE DEFAULT USERS
-INSERT INTO "user" (username, password) VALUES
-    ('SYSTEM', '0f8afe0239e42215735340b80c8de401aa7304b2470304165b4c15e37ee392e5'),
-    ('admin', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918');
+INSERT INTO "user" (username, displayname, password, fk_usergroupid) VALUES
+    ('SYSTEM', 'SYSTEM', '0f8afe0239e42215735340b80c8de401aa7304b2470304165b4c15e37ee392e5', 1),
+    ('admin', 'Administrator', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', 3);
 
 -- CREATE STATUS TYPES
 INSERT INTO "status" (name) VALUES

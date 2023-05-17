@@ -1,6 +1,6 @@
 /*
 CREATE SAMPLE DATA
-Michi von Ah - April 2023
+Michi von Ah - April/May 2023
 */
 
 INSERT INTO "user" (username, displayname, password, mail) VALUES
